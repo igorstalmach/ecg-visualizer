@@ -22,16 +22,23 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-const ALLOWED_FILE_EXTENSIONS = [".bat", ".png", ".jpg", ".jpeg"];
-
 const FormSchema = z.object({
-  file: z
+  hea_file: z
     .instanceof(File, { message: "A valid file is required." })
     .refine(
-      (file) =>
-        ALLOWED_FILE_EXTENSIONS.some((ext) =>
-          file.name.toLowerCase().endsWith(ext),
-        ),
+      (file) => file.name.toLowerCase().endsWith(".hea"),
+      "Invalid file extension. See supported extensions.",
+    ),
+  dat_file: z
+    .instanceof(File, { message: "A valid file is required." })
+    .refine(
+      (file) => file.name.toLowerCase().endsWith(".dat"),
+      "Invalid file extension. See supported extensions.",
+    ),
+  xws_file: z
+    .instanceof(File, { message: "A valid file is required." })
+    .refine(
+      (file) => file.name.toLowerCase().endsWith(".xws"),
       "Invalid file extension. See supported extensions.",
     ),
 });
@@ -40,12 +47,14 @@ export const FileInput = () => {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      file: undefined,
+      hea_file: undefined,
+      dat_file: undefined,
+      xws_file: undefined,
     },
   });
 
   const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    console.log("Uploaded file:", values.file);
+    // console.log("Uploaded file:", values.file);
   };
 
   return (
@@ -56,10 +65,10 @@ export const FileInput = () => {
       >
         <FormField
           control={form.control}
-          name="file"
+          name="hea_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload ECG Recording</FormLabel>
+              <FormLabel>Upload ECG Recording Header File</FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -73,9 +82,61 @@ export const FileInput = () => {
                 <HoverCard openDelay={0} closeDelay={150}>
                   <HoverCardTrigger>See supported files</HoverCardTrigger>
                   <HoverCardContent>
-                    Detector accepts:
-                    <br></br> - <b>.bat</b> files in WFDB format.
-                    <br></br> - <b>.png</b> or <b>.jpg</b> image files.
+                    Detector accepts <b>.hea</b> header file in WFDB format
+                  </HoverCardContent>
+                </HoverCard>
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dat_file"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Upload ECG Recording Data File</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    field.onChange(file || undefined);
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                <HoverCard openDelay={0} closeDelay={150}>
+                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardContent>
+                    Detector accepts <b>.dat</b> data file in WFDB format
+                  </HoverCardContent>
+                </HoverCard>
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="xws_file"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Upload ECG Recording Annotations File</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    field.onChange(file || undefined);
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                <HoverCard openDelay={0} closeDelay={150}>
+                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardContent>
+                    Detector accepts <b>.xws</b> annotations file in WFDB format
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
