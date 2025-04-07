@@ -21,28 +21,31 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const ALLOWED_FILE_EXTENSIONS = [".png", ".jpg", ".jpeg"];
 
-const FormSchema = z.object({
-  image: z
-    .instanceof(File, { message: "A valid file is required." })
-    .refine(
-      (file) =>
-        ALLOWED_FILE_EXTENSIONS.some((ext) =>
-          file.name.toLowerCase().endsWith(ext),
-        ),
-      "Invalid file extension. See supported extensions.",
-    ),
-  samplingRate: z
-    .number()
-    .refine(
-      (num) => num >= 50 && num <= 1000,
-      "Sampling rate must be between 50 and 1000 Hz.",
-    ),
-});
-
 export const ImageInput = () => {
+  const translation = useTranslation();
+
+  const FormSchema = z.object({
+    image: z
+      .instanceof(File, { message: translation.imageInput.validFileIsRequired })
+      .refine(
+        (file) =>
+          ALLOWED_FILE_EXTENSIONS.some((ext) =>
+            file.name.toLowerCase().endsWith(ext),
+          ),
+        translation.imageInput.invalidFileExtension,
+      ),
+    samplingRate: z
+      .number()
+      .refine(
+        (num) => num >= 50 && num <= 1000,
+        translation.imageInput.invalidSamplingRate,
+      ),
+  });
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -64,7 +67,7 @@ export const ImageInput = () => {
           name="image"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload ECG Recording Image</FormLabel>
+              <FormLabel>{translation.imageInput.imageFileHeader}</FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -76,10 +79,11 @@ export const ImageInput = () => {
               </FormControl>
               <FormDescription>
                 <HoverCard openDelay={0} closeDelay={150}>
-                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardTrigger>
+                    {translation.imageInput.seeSupportedFiles}
+                  </HoverCardTrigger>
                   <HoverCardContent>
-                    Field accepts image files in <b>.png</b> or <b>.jpg</b>{" "}
-                    formats.
+                    {translation.imageInput.imageFileDescription}
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -92,7 +96,7 @@ export const ImageInput = () => {
           name="samplingRate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Set recording sampling rate</FormLabel>
+              <FormLabel>{translation.imageInput.samplingRateHeader}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
@@ -102,9 +106,11 @@ export const ImageInput = () => {
               </FormControl>
               <FormDescription>
                 <HoverCard openDelay={0} closeDelay={150}>
-                  <HoverCardTrigger>See supported values</HoverCardTrigger>
+                  <HoverCardTrigger>
+                    {translation.imageInput.seeSupportedValues}
+                  </HoverCardTrigger>
                   <HoverCardContent>
-                    Sampling rate must be between <b>50</b> and <b>1000 Hz</b>.
+                    {translation.imageInput.samplingRateDescription}
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -113,7 +119,7 @@ export const ImageInput = () => {
           )}
         />
         <div className="flex justify-center items-center">
-          <Button type="submit">Detect</Button>
+          <Button type="submit">{translation.imageInput.detectButton}</Button>
         </div>
       </form>
     </Form>

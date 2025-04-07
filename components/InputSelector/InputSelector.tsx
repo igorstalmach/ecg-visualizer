@@ -19,25 +19,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
+import { useBearStore } from "@/hooks/useStore";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const options = [
-  {
-    value: "wfdb",
-    label: "WFDB Data File Recording",
-  },
-  {
-    value: "image",
-    label: "Image Recording",
-  },
-];
-
-type Props = {
-  value: string;
-  setValue: (value: string) => void;
-};
-
-export const InputSelector = ({ value, setValue }: Props) => {
+export const InputSelector = () => {
   const [open, setOpen] = useState(false);
+
+  const inputType = useBearStore((state) => state.inputType);
+  const setInputType = useBearStore((state) => state.setInputType);
+
+  const translation = useTranslation();
+
+  const options = [
+    {
+      value: "wfdb",
+      label: translation.inputSelector.wfdbInput,
+    },
+    {
+      value: "image",
+      label: translation.inputSelector.imageInput,
+    },
+  ];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -48,24 +50,31 @@ export const InputSelector = ({ value, setValue }: Props) => {
           aria-expanded={open}
           className="w-[250px] justify-between mb-7"
         >
-          {value
-            ? options.find((option) => option.value === value)?.label
-            : "Select input type..."}
+          {inputType
+            ? options.find((option) => option.value === inputType)?.label
+            : translation.inputSelector.selectInputType}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">
         <Command>
-          <CommandInput placeholder="Search input types..." className="h-9" />
+          <CommandInput
+            placeholder={translation.inputSelector.searchInputTypes}
+            className="h-9"
+          />
           <CommandList>
-            <CommandEmpty>No input option found</CommandEmpty>
+            <CommandEmpty>
+              {translation.inputSelector.noInputOptionFound}
+            </CommandEmpty>
             <CommandGroup>
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
                   value={option.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setInputType(
+                      currentValue === inputType ? "" : currentValue,
+                    );
                     setOpen(false);
                   }}
                 >
@@ -73,7 +82,7 @@ export const InputSelector = ({ value, setValue }: Props) => {
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === option.value ? "opacity-100" : "opacity-0",
+                      inputType === option.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>

@@ -1,0 +1,93 @@
+import { useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+import * as React from "react";
+import { useBearStore } from "@/hooks/useStore";
+import { useTranslation } from "@/hooks/useTranslation";
+
+const options = [
+  {
+    value: "polish",
+    label: "🇵🇱 Polski",
+  },
+  {
+    value: "english",
+    label: "🇺🇸 English",
+  },
+];
+
+export const LanguageSelector = () => {
+  const [open, setOpen] = useState(false);
+
+  const language = useBearStore((state) => state.language);
+  const setLanguage = useBearStore((state) => state.setLanguage);
+
+  const translation = useTranslation();
+
+  return (
+    <div className="absolute bottom-5 right-5 z-50">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[150px] justify-between"
+          >
+            {language
+              ? options.find((option) => option.value === language)?.label
+              : translation.languageSelector.selectLanguage}
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[250px] p-0">
+          <Command>
+            <CommandInput
+              placeholder={translation.languageSelector.searchLanguage}
+              className="h-9"
+            />
+            <CommandList>
+              <CommandEmpty>
+                {translation.languageSelector.noLanguagesFound}
+              </CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    value={option.value}
+                    onSelect={(currentValue) => {
+                      setLanguage(currentValue);
+                      setOpen(false);
+                    }}
+                  >
+                    {option.label}
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        language === option.value ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+};

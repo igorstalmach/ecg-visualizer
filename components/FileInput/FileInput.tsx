@@ -21,29 +21,32 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
-const FormSchema = z.object({
-  hea_file: z
-    .instanceof(File, { message: "A valid file is required." })
-    .refine(
-      (file) => file.name.toLowerCase().endsWith(".hea"),
-      "Invalid file extension. See supported extensions.",
-    ),
-  dat_file: z
-    .instanceof(File, { message: "A valid file is required." })
-    .refine(
-      (file) => file.name.toLowerCase().endsWith(".dat"),
-      "Invalid file extension. See supported extensions.",
-    ),
-  xws_file: z
-    .instanceof(File, { message: "A valid file is required." })
-    .refine(
-      (file) => file.name.toLowerCase().endsWith(".xws"),
-      "Invalid file extension. See supported extensions.",
-    ),
-});
+import { useTranslation } from "@/hooks/useTranslation";
 
 export const FileInput = () => {
+  const translation = useTranslation();
+
+  const FormSchema = z.object({
+    hea_file: z
+      .instanceof(File, { message: translation.fileInput.validFileIsRequired })
+      .refine(
+        (file) => file.name.toLowerCase().endsWith(".hea"),
+        translation.fileInput.invalidFileExtension,
+      ),
+    dat_file: z
+      .instanceof(File, { message: translation.fileInput.validFileIsRequired })
+      .refine(
+        (file) => file.name.toLowerCase().endsWith(".dat"),
+        translation.fileInput.invalidFileExtension,
+      ),
+    xws_file: z
+      .instanceof(File, { message: translation.fileInput.validFileIsRequired })
+      .refine(
+        (file) => file.name.toLowerCase().endsWith(".xws"),
+        translation.fileInput.invalidFileExtension,
+      ),
+  });
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -66,7 +69,7 @@ export const FileInput = () => {
           name="hea_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload ECG Recording Header File</FormLabel>
+              <FormLabel>{translation.fileInput.headerFileHeader}</FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -78,10 +81,11 @@ export const FileInput = () => {
               </FormControl>
               <FormDescription>
                 <HoverCard openDelay={0} closeDelay={150}>
-                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardTrigger>
+                    {translation.fileInput.seeSupportedFiles}
+                  </HoverCardTrigger>
                   <HoverCardContent>
-                    Field accepts a <b>.hea</b> header file specified by WFDB
-                    format.
+                    {translation.fileInput.headerFileDescription}
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -94,7 +98,7 @@ export const FileInput = () => {
           name="dat_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload ECG Recording Data File</FormLabel>
+              <FormLabel>{translation.fileInput.dataFileHeader}</FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -106,10 +110,11 @@ export const FileInput = () => {
               </FormControl>
               <FormDescription>
                 <HoverCard openDelay={0} closeDelay={150}>
-                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardTrigger>
+                    {translation.fileInput.seeSupportedFiles}
+                  </HoverCardTrigger>
                   <HoverCardContent>
-                    Field accepts a <b>.dat</b> data file specified by WFDB.
-                    format
+                    {translation.fileInput.dataFileDescription}
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -122,7 +127,9 @@ export const FileInput = () => {
           name="xws_file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Upload ECG Recording Annotations File</FormLabel>
+              <FormLabel>
+                {translation.fileInput.annotationsFileHeader}
+              </FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -134,10 +141,11 @@ export const FileInput = () => {
               </FormControl>
               <FormDescription>
                 <HoverCard openDelay={0} closeDelay={150}>
-                  <HoverCardTrigger>See supported files</HoverCardTrigger>
+                  <HoverCardTrigger>
+                    {translation.fileInput.seeSupportedFiles}
+                  </HoverCardTrigger>
                   <HoverCardContent>
-                    Field accepts a <b>.xws</b> annotations file specified by
-                    WFDB format.
+                    {translation.fileInput.annotationsFileDescription}
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -146,7 +154,7 @@ export const FileInput = () => {
           )}
         />
         <div className="flex justify-center items-center">
-          <Button type="submit">Detect</Button>
+          <Button type="submit">{translation.fileInput.detectButton}</Button>
         </div>
       </form>
     </Form>
