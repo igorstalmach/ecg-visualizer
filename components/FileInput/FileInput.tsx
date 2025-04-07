@@ -82,7 +82,8 @@ export const FileInput = () => {
                 <HoverCard openDelay={0} closeDelay={150}>
                   <HoverCardTrigger>See supported files</HoverCardTrigger>
                   <HoverCardContent>
-                    Detector accepts <b>.hea</b> header file in WFDB format
+                    Field accepts a <b>.hea</b> header file specified by WFDB
+                    format.
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -109,7 +110,8 @@ export const FileInput = () => {
                 <HoverCard openDelay={0} closeDelay={150}>
                   <HoverCardTrigger>See supported files</HoverCardTrigger>
                   <HoverCardContent>
-                    Detector accepts <b>.dat</b> data file in WFDB format
+                    Field accepts a <b>.dat</b> data file specified by WFDB.
+                    format
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
@@ -136,7 +138,8 @@ export const FileInput = () => {
                 <HoverCard openDelay={0} closeDelay={150}>
                   <HoverCardTrigger>See supported files</HoverCardTrigger>
                   <HoverCardContent>
-                    Detector accepts <b>.xws</b> annotations file in WFDB format
+                    Field accepts a <b>.xws</b> annotations file specified by
+                    WFDB format.
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>

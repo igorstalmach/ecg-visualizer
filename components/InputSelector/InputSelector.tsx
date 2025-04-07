@@ -50,13 +50,13 @@ export const InputSelector = ({ value, setValue }: Props) => {
         >
           {value
             ? options.find((option) => option.value === value)?.label
-            : "Select recording type..."}
+            : "Select input type..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">
         <Command>
-          <CommandInput placeholder="Search input options..." className="h-9" />
+          <CommandInput placeholder="Search input types..." className="h-9" />
           <CommandList>
             <CommandEmpty>No input option found</CommandEmpty>
             <CommandGroup>

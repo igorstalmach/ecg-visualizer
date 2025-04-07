@@ -34,6 +34,12 @@ const FormSchema = z.object({
         ),
       "Invalid file extension. See supported extensions.",
     ),
+  samplingRate: z
+    .number()
+    .refine(
+      (num) => num >= 50 && num <= 1000,
+      "Sampling rate must be between 50 and 1000 Hz.",
+    ),
 });
 
 export const ImageInput = () => {
@@ -41,6 +47,7 @@ export const ImageInput = () => {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       image: undefined,
+      samplingRate: 250,
     },
   });
 
@@ -73,9 +80,33 @@ export const ImageInput = () => {
                 <HoverCard openDelay={0} closeDelay={150}>
                   <HoverCardTrigger>See supported files</HoverCardTrigger>
                   <HoverCardContent>
-                    Detector accepts image files:
-                    <br></br> - <b>.png</b>
-                    <br></br> - <b>.jpg</b>
+                    Field accepts image files in <b>.png</b> or <b>.jpg</b>{" "}
+                    formats.
+                  </HoverCardContent>
+                </HoverCard>
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="samplingRate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Set recording sampling rate</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              </FormControl>
+              <FormDescription>
+                <HoverCard openDelay={0} closeDelay={150}>
+                  <HoverCardTrigger>See supported values</HoverCardTrigger>
+                  <HoverCardContent>
+                    Sampling rate must be between <b>50</b> and <b>1000 Hz</b>.
                   </HoverCardContent>
                 </HoverCard>
               </FormDescription>
