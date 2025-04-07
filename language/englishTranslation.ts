@@ -14,13 +14,13 @@ export const englishTranslation = {
    fileInput: {
       headerFileHeader: 'Upload ECG Recording Header File',
       headerFileDescription:
-         'Field accepts a <b>.hea</b> header file specified by WFDB format.',
+         'Field accepts a .hea header file specified by WFDB format.',
       dataFileHeader: 'Upload ECG Recording Data File',
       dataFileDescription:
-         'Field accepts a <b>.dat</b> data file specified by WFDB format.',
+         'Field accepts a .dat data file specified by WFDB format.',
       annotationsFileHeader: 'Upload ECG Recording Annotations File',
       annotationsFileDescription:
-         'Field accepts a <b>.xws</b> annotations file specified by WFDB format.',
+         'Field accepts a .xws annotations file specified by WFDB format.',
       detectButton: 'Detect',
       seeSupportedFiles: 'See supported files',
       invalidFileExtension: 'Invalid file extension. See supported extensions.',
@@ -30,10 +30,10 @@ export const englishTranslation = {
    imageInput: {
       imageFileHeader: 'Upload ECG Recording Image File',
       imageFileDescription:
-         'Field accepts image files in <b>.png</b> or <b>.jpg</b> formats.',
+         'Field accepts image files in .png or .jpg formats.',
       samplingRateHeader: 'Set Recording Sampling Rate',
       samplingRateDescription:
-         'Sampling rate must be between <b>50</b> and <b>1000 Hz</b>.',
+         'Sampling rate must be between 50 and 1000 Hz.',
       detectButton: 'Detect',
       seeSupportedFiles: 'See supported files',
       seeSupportedValues: 'See supported values',
