@@ -53,9 +53,7 @@ export const FileInput = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
-    // console.log("Uploaded file:", values.file);
-  };
+  const onSubmit = () => {};
 
   return (
     <Form {...form}>
