@@ -1,1 +1,1 @@
-export * from "./InputSelector";
+export * from './InputSelector';
