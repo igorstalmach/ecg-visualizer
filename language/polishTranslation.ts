@@ -12,13 +12,13 @@ export const polishTranslation = {
    },
 
    fileInput: {
-      headerFileHeader: 'Prześlij plik nagłówkowy nagrania EKG',
+      headerFileHeader: 'Załącz plik nagłówkowy nagrania EKG',
       headerFileDescription:
          'Pole akceptuje plik nagłówkowy .hea zgodny z formatem WFDB.',
-      dataFileHeader: 'Prześlij plik danych nagrania EKG',
+      dataFileHeader: 'Załącz plik danych nagrania EKG',
       dataFileDescription:
          'Pole akceptuje plik danych .dat zgodny z formatem WFDB.',
-      annotationsFileHeader: 'Prześlij plik adnotacji nagrania EKG',
+      annotationsFileHeader: 'Załącz plik adnotacji nagrania EKG',
       annotationsFileDescription:
          'Pole akceptuje plik adnotacji .xws zgodny z formatem WFDB.',
       detectButton: 'Wykryj',
@@ -29,7 +29,7 @@ export const polishTranslation = {
    },
 
    imageInput: {
-      imageFileHeader: 'Prześlij plik obrazu nagrania EKG',
+      imageFileHeader: 'Załącz plik obrazu nagrania EKG',
       imageFileDescription:
          'Pole akceptuje pliki graficzne w formacie .png lub .jpg.',
       samplingRateHeader: 'Ustaw częstotliwość próbkowania nagrania',
@@ -49,5 +49,10 @@ export const polishTranslation = {
       selectLanguage: 'Wybierz język...',
       searchLanguage: 'Szukaj języka...',
       noLanguagesFound: 'Nie znaleziono języków',
+   },
+
+   status: {
+      statusHeader: 'Status połączenia z serwerem',
+      statusDescription: 'Aplikacja jest połączona z serwerem.',
    },
 };

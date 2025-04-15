@@ -46,7 +46,7 @@ export const InputSelector = () => {
                variant="outline"
                role="combobox"
                aria-expanded={open}
-               className="w-[250px] justify-between mb-7"
+               className="w-[250px] justify-between mb-10"
             >
                {inputType
                   ? options.find((option) => option.value === inputType)?.label

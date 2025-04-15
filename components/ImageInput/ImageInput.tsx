@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import {
    Form,
    FormControl,
-   FormDescription,
    FormField,
    FormItem,
    FormLabel,
@@ -18,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useTranslation } from '@/hooks/useTranslation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FileQuestion } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -60,7 +60,7 @@ export const ImageInput = () => {
       <Form {...form}>
          <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full max-w-lg space-y-6"
+            className="w-full max-w-lg space-y-9"
          >
             <FormField
                control={form.control}
@@ -69,6 +69,18 @@ export const ImageInput = () => {
                   <FormItem>
                      <FormLabel>
                         {translation.imageInput.imageFileHeader}
+                        <HoverCard openDelay={0} closeDelay={150}>
+                           <HoverCardTrigger>
+                              <FileQuestion
+                                 size={16}
+                                 strokeWidth={1.75}
+                                 className="cursor-help"
+                              />
+                           </HoverCardTrigger>
+                           <HoverCardContent>
+                              {translation.imageInput.imageFileDescription}
+                           </HoverCardContent>
+                        </HoverCard>
                      </FormLabel>
                      <FormControl>
                         <Input
@@ -79,16 +91,6 @@ export const ImageInput = () => {
                            }}
                         />
                      </FormControl>
-                     <FormDescription>
-                        <HoverCard openDelay={0} closeDelay={150}>
-                           <HoverCardTrigger>
-                              {translation.imageInput.seeSupportedFiles}
-                           </HoverCardTrigger>
-                           <HoverCardContent>
-                              {translation.imageInput.imageFileDescription}
-                           </HoverCardContent>
-                        </HoverCard>
-                     </FormDescription>
                      <FormMessage />
                   </FormItem>
                )}
@@ -100,6 +102,18 @@ export const ImageInput = () => {
                   <FormItem>
                      <FormLabel>
                         {translation.imageInput.samplingRateHeader}
+                        <HoverCard openDelay={0} closeDelay={150}>
+                           <HoverCardTrigger>
+                              <FileQuestion
+                                 size={16}
+                                 strokeWidth={1.75}
+                                 className="cursor-help"
+                              />
+                           </HoverCardTrigger>
+                           <HoverCardContent>
+                              {translation.imageInput.samplingRateDescription}
+                           </HoverCardContent>
+                        </HoverCard>
                      </FormLabel>
                      <FormControl>
                         <Input
@@ -110,16 +124,6 @@ export const ImageInput = () => {
                            }
                         />
                      </FormControl>
-                     <FormDescription>
-                        <HoverCard openDelay={0} closeDelay={150}>
-                           <HoverCardTrigger>
-                              {translation.imageInput.seeSupportedValues}
-                           </HoverCardTrigger>
-                           <HoverCardContent>
-                              {translation.imageInput.samplingRateDescription}
-                           </HoverCardContent>
-                        </HoverCard>
-                     </FormDescription>
                      <FormMessage />
                   </FormItem>
                )}

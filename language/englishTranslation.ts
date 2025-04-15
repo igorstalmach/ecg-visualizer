@@ -12,13 +12,13 @@ export const englishTranslation = {
    },
 
    fileInput: {
-      headerFileHeader: 'Upload ECG Recording Header File',
+      headerFileHeader: 'Attach ECG Recording Header File',
       headerFileDescription:
          'Field accepts a .hea header file specified by WFDB format.',
-      dataFileHeader: 'Upload ECG Recording Data File',
+      dataFileHeader: 'Attach ECG Recording Data File',
       dataFileDescription:
          'Field accepts a .dat data file specified by WFDB format.',
-      annotationsFileHeader: 'Upload ECG Recording Annotations File',
+      annotationsFileHeader: 'Attach ECG Recording Annotations File',
       annotationsFileDescription:
          'Field accepts a .xws annotations file specified by WFDB format.',
       detectButton: 'Detect',
@@ -28,12 +28,11 @@ export const englishTranslation = {
    },
 
    imageInput: {
-      imageFileHeader: 'Upload ECG Recording Image File',
+      imageFileHeader: 'Attach ECG Recording Image File',
       imageFileDescription:
          'Field accepts image files in .png or .jpg formats.',
       samplingRateHeader: 'Set Recording Sampling Rate',
-      samplingRateDescription:
-         'Sampling rate must be between 50 and 1000 Hz.',
+      samplingRateDescription: 'Sampling rate must be between 50 and 1000 Hz.',
       detectButton: 'Detect',
       seeSupportedFiles: 'See supported files',
       seeSupportedValues: 'See supported values',
@@ -46,5 +45,10 @@ export const englishTranslation = {
       selectLanguage: 'Select language...',
       searchLanguage: 'Search languages...',
       noLanguagesFound: 'No languages found',
+   },
+
+   status: {
+      statusHeader: 'Connection with server',
+      statusDescription: 'Application is connected to the server.',
    },
 };
