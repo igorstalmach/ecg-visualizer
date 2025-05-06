@@ -12,10 +12,8 @@ interface EcgChartProps {
    data: EcgChannel[];
 }
 
-const EcgChart: React.FC<EcgChartProps> = ({ data }) => {
+const EcgChart = ({ data }: EcgChartProps) => {
    const containerRef = useRef<HTMLDivElement | null>(null);
-
-   // ---------------- A. HELPER FUNCTIONS ----------------
 
    /**
     * Draw a checkered grid across (innerWidth x innerHeight).
@@ -54,7 +52,7 @@ const EcgChart: React.FC<EcgChartProps> = ({ data }) => {
    };
 
    /**
-    * Draw each lead in a separate horizontal "band."
+    * Draw each lead in a separate horizontal band.
     */
    const drawLeads = (
       g: d3.Selection<SVGGElement, unknown, null, undefined>,
@@ -117,37 +115,39 @@ const EcgChart: React.FC<EcgChartProps> = ({ data }) => {
       return d3.scaleLinear().domain([minVal, maxVal]).range([bandHeight, 0]); // invert
    };
 
-   // ---------------- B. MAIN USE EFFECT ----------------
-
    useEffect(() => {
-      if (!data || data.length === 0) return;
+      if (!data || data.length === 0) {
+         return;
+      }
+
       const container = containerRef.current;
-      if (!container) return;
+
+      if (!container) {
+         return;
+      }
 
       // Clear old content
       d3.select(container).selectAll('*').remove();
 
-      // measure container
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
 
-      // let's do 2x horizontal so user can scroll
       const svgWidth = containerWidth * 2;
       const svgHeight = containerHeight;
 
       // Assume 4 leads => each is svgHeight / 4
-      // (if data.length != 4, we just do totalHeight / data.length)
+      // (if data.length != 4, then do totalHeight / data.length)
       const leadCount = data.length;
       const bandHeight = svgHeight / leadCount;
 
-      // create the SVG inline here
+      // Create the SVG inline here
       const svg = d3
          .select(container)
          .append('svg')
          .attr('width', svgWidth)
          .attr('height', svgHeight);
 
-      // margins around the plot area
+      // Margins around the plot area
       const margin = {
          top: 20,
          right: 20,
@@ -157,7 +157,7 @@ const EcgChart: React.FC<EcgChartProps> = ({ data }) => {
       const innerWidth = svgWidth - margin.left - margin.right;
       const innerHeight = svgHeight - margin.top - margin.bottom;
 
-      // main chart group
+      // Main chart group
       const g = svg
          .append('g')
          .attr('transform', `translate(${margin.left},${margin.top})`);
@@ -169,20 +169,17 @@ const EcgChart: React.FC<EcgChartProps> = ({ data }) => {
          .domain([0, maxSamples])
          .range([0, innerWidth]);
 
-      // call our helpers
       drawGrid(g, innerWidth, innerHeight);
       drawLeads(g, data, xScale, bandHeight, margin.left);
       drawXAxis(g, xScale, innerHeight);
    }, [data]);
-
-   // ---------------- C. RENDER ----------------
 
    return (
       <div
          ref={containerRef}
          style={{
             width: '100vw',
-            height: '100vh',
+            height: '90vh',
             overflowX: 'auto',
             overflowY: 'hidden',
          }}

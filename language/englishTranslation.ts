@@ -51,4 +51,10 @@ export const englishTranslation = {
       statusHeader: 'Connection with server',
       statusDescription: 'Application is connected to the server.',
    },
+
+   plot: {
+      start: 'Start',
+      end: 'End',
+      custom: 'Custom',
+   },
 };

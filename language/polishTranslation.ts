@@ -55,4 +55,10 @@ export const polishTranslation = {
       statusHeader: 'Status połączenia z serwerem',
       statusDescription: 'Aplikacja jest połączona z serwerem.',
    },
+
+   plot: {
+      start: 'Początek',
+      end: 'Koniec',
+      custom: 'Niestandardowy',
+   },
 };

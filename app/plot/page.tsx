@@ -1,8 +1,21 @@
+'use client';
+
 import EcgChart, { EcgChannel } from '@/components/ECGPlot/ECGPlot';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useTranslation } from '@/hooks/useTranslation';
 import { generateEcgData } from '@/lib/ecgDataGenerator';
+import {
+   ArrowBigLeft,
+   ArrowBigLeftDash,
+   ArrowBigRight,
+   ArrowBigRightDash,
+} from 'lucide-react';
 import React from 'react';
 
 const EcgPage: React.FC = () => {
+   const translation = useTranslation();
+
    // 300 samples/beat * 10 beats = 3000 samples => plenty wide
    const baseData = generateEcgData(200, 10);
 
@@ -35,6 +48,41 @@ const EcgPage: React.FC = () => {
 
    return (
       <div>
+         <div className="flex justify-center items-center gap-5 mb-3 mt-7">
+            <div className="flex gap-2 w-40">
+               <Button type="submit">
+                  <ArrowBigLeft />
+               </Button>
+               <Input
+                  type="number"
+                  placeholder={translation.plot.custom}
+                  min={0}
+               />
+            </div>
+            <Button>
+               <ArrowBigLeftDash /> {translation.plot.start}
+            </Button>
+            <Button>
+               <ArrowBigLeft /> 15s
+            </Button>
+            <p>12:00:00 - 12:30:00</p>
+            <Button>
+               15s <ArrowBigRight />
+            </Button>
+            <Button>
+               {translation.plot.end} <ArrowBigRightDash />
+            </Button>
+            <div className="flex gap-2 w-40">
+               <Input
+                  type="number"
+                  placeholder={translation.plot.custom}
+                  min={0}
+               />
+               <Button type="submit">
+                  <ArrowBigRight />
+               </Button>
+            </div>
+         </div>
          <EcgChart data={leads} />
       </div>
    );
