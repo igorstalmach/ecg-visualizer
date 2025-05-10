@@ -1,3 +1,5 @@
+import { ECGChannel } from '@/sharedTypes';
+
 function singleEcgWaveShape(t: number): number {
    let amp = 0;
 
@@ -55,3 +57,33 @@ export function generateEcgData(samplesPerBeat = 300, numBeats = 10): number[] {
    }
    return data;
 }
+
+// 300 samples/beat * 10 beats = 3000 samples => plenty wide
+const baseData = generateEcgData(200, 10);
+
+// Create 4 leads with slight amplitude/offset differences
+export const leads: ECGChannel[] = [
+   // Strong negative offset, double amplitude
+   {
+      label: 'Lead I',
+      samples: baseData.map((v) => v * 2.0 - 1.0),
+   },
+
+   // 1.5 amplitude, offset slightly down
+   {
+      label: 'Lead II',
+      samples: baseData.map((v) => v * 1.5 - 0.3),
+   },
+
+   // Smaller amplitude, but shifted way up
+   {
+      label: 'Lead III',
+      samples: baseData.map((v) => v * 0.5 + 1.0),
+   },
+
+   // Inverted wave: negative amplitude + offset
+   {
+      label: 'Lead V1',
+      samples: baseData.map((v) => -1.5 * v + 0.7),
+   },
+];

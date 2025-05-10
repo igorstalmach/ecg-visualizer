@@ -4,7 +4,7 @@ import { FileInput } from '@/components/FileInput';
 import { ImageInput } from '@/components/ImageInput';
 import { InputSelector } from '@/components/InputSelector';
 import { LanguageSelector } from '@/components/LanguageSelector';
-import { Status } from '@/components/Status';
+// import { Status } from '@/components/Status';
 import { useBearStore } from '@/hooks/useStore';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -26,7 +26,7 @@ export default function Home() {
 
          <LanguageSelector />
 
-         <Status />
+         {/*<Status />*/}
       </div>
    );
 }

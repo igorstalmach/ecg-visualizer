@@ -57,4 +57,8 @@ export const englishTranslation = {
       end: 'End',
       custom: 'Custom',
    },
+
+   messages: {
+      parsingError: 'Error parsing the files. Please try again later.',
+   },
 };

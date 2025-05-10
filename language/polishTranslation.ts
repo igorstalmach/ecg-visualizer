@@ -61,4 +61,8 @@ export const polishTranslation = {
       end: 'Koniec',
       custom: 'Niestandardowy',
    },
+
+   messages: {
+      parsingError: 'Błąd podczas analizy plików. Spróbuj ponownie później.',
+   },
 };

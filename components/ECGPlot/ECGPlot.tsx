@@ -1,15 +1,11 @@
 'use client';
 
+import { ECGChannel } from '@/sharedTypes';
 import * as d3 from 'd3';
 import React, { useEffect, useRef } from 'react';
 
-export interface EcgChannel {
-   label: string;
-   samples: number[];
-}
-
 interface EcgChartProps {
-   data: EcgChannel[];
+   data: ECGChannel[];
 }
 
 const EcgChart = ({ data }: EcgChartProps) => {
@@ -56,7 +52,7 @@ const EcgChart = ({ data }: EcgChartProps) => {
     */
    const drawLeads = (
       g: d3.Selection<SVGGElement, unknown, null, undefined>,
-      data: EcgChannel[],
+      data: ECGChannel[],
       xScale: d3.ScaleLinear<number, number>,
       bandHeight: number,
       marginLeft: number,

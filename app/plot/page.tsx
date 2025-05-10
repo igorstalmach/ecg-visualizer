@@ -1,10 +1,10 @@
 'use client';
 
-import EcgChart, { EcgChannel } from '@/components/ECGPlot/ECGPlot';
+import EcgChart from '@/components/ECGPlot/ECGPlot';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useBearStore } from '@/hooks/useStore';
 import { useTranslation } from '@/hooks/useTranslation';
-import { generateEcgData } from '@/utils/ecgDataGenerator';
 import {
    ArrowBigLeft,
    ArrowBigLeftDash,
@@ -16,35 +16,9 @@ import React from 'react';
 const EcgPage: React.FC = () => {
    const translation = useTranslation();
 
-   // 300 samples/beat * 10 beats = 3000 samples => plenty wide
-   const baseData = generateEcgData(200, 10);
-
-   // Create 4 leads with slight amplitude/offset differences
-   const leads: EcgChannel[] = [
-      // Strong negative offset, double amplitude
-      {
-         label: 'Lead I',
-         samples: baseData.map((v) => v * 2.0 - 1.0),
-      },
-
-      // 1.5 amplitude, offset slightly down
-      {
-         label: 'Lead II',
-         samples: baseData.map((v) => v * 1.5 - 0.3),
-      },
-
-      // Smaller amplitude, but shifted way up
-      {
-         label: 'Lead III',
-         samples: baseData.map((v) => v * 0.5 + 1.0),
-      },
-
-      // Inverted wave: negative amplitude + offset
-      {
-         label: 'Lead V1',
-         samples: baseData.map((v) => -1.5 * v + 0.7),
-      },
-   ];
+   const { startTime, endTime, channels } = useBearStore(
+      (state) => state.ecgData,
+   );
 
    return (
       <div>
@@ -65,7 +39,10 @@ const EcgPage: React.FC = () => {
             <Button>
                <ArrowBigLeft /> 15s
             </Button>
-            <p>12:00:00 - 12:30:00</p>
+            {/*<p>12:00:00 - 12:30:00</p>*/}
+            <p>
+               {startTime} - {endTime}
+            </p>
             <Button>
                15s <ArrowBigRight />
             </Button>
@@ -83,7 +60,7 @@ const EcgPage: React.FC = () => {
                </Button>
             </div>
          </div>
-         <EcgChart data={leads} />
+         <EcgChart data={channels} />
       </div>
    );
 };
