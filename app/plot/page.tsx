@@ -4,7 +4,7 @@ import EcgChart, { EcgChannel } from '@/components/ECGPlot/ECGPlot';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTranslation } from '@/hooks/useTranslation';
-import { generateEcgData } from '@/lib/ecgDataGenerator';
+import { generateEcgData } from '@/utils/ecgDataGenerator';
 import {
    ArrowBigLeft,
    ArrowBigLeftDash,
