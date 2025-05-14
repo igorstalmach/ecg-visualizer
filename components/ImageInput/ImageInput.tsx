@@ -73,8 +73,8 @@ export const ImageInput = () => {
       const { image, samplingRate } = form.getValues();
 
       const formData = new FormData();
-      formData.append('image', image);
-      formData.append('samplingRate', samplingRate.toString());
+      formData.append('image_file', image);
+      // formData.append('samplingRate', samplingRate.toString());
 
       const response = await axios.post(ECG_IMAGE_PARSE_URL, formData);
 
