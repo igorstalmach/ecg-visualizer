@@ -70,7 +70,7 @@ export const ImageInput = () => {
    const onSubmit = async () => {
       setIsLoading(true);
 
-      const { image, samplingRate } = form.getValues();
+      const { image } = form.getValues();
 
       const formData = new FormData();
       formData.append('image_file', image);
