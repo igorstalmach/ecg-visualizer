@@ -38,7 +38,7 @@ export const LanguageSelector = () => {
    const translation = useTranslation();
 
    return (
-      <div className="absolute bottom-5 right-5 z-50">
+      <div className="absolute bottom-5 right-5 z-1">
          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                <Button

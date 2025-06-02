@@ -16,10 +16,7 @@ interface BearState {
    setXwsFile: (xwsFile: File) => void;
 
    imageFile: File | undefined;
-   setImageFile: (imageFile: File) => void;
-
-   samplingRate: number | undefined;
-   setSamplingRate: (samplingRate: number) => void;
+   setImageFile: (imageFile: File | undefined) => void;
 
    ecgData: ConvertedECGData;
    setECGData: (ecgData: ConvertedECGData) => void;
@@ -45,10 +42,7 @@ export const useBearStore = create<BearState>()(
             setXwsFile: (xwsFile) => set({ xwsFile }),
 
             imageFile: undefined,
-            setImageFile: (imageFile) => set({ imageFile }),
-
-            samplingRate: undefined,
-            setSamplingRate: (samplingRate) => set({ samplingRate }),
+            setImageFile: (imageFile: File | undefined) => set({ imageFile }),
 
             ecgData: {
                startTime: '',
