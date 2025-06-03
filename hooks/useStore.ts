@@ -1,4 +1,4 @@
-import { ConvertedECGData } from '@/sharedTypes';
+import { ConvertedECGData, UnconvertedECGData } from '@/sharedTypes';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
@@ -16,13 +16,10 @@ interface BearState {
    setXwsFile: (xwsFile: File) => void;
 
    imageFile: File | undefined;
-   setImageFile: (imageFile: File) => void;
-
-   samplingRate: number | undefined;
-   setSamplingRate: (samplingRate: number) => void;
+   setImageFile: (imageFile: File | undefined) => void;
 
    ecgData: ConvertedECGData;
-   setECGData: (ecgData: ConvertedECGData) => void;
+   setECGData: (ecgData: UnconvertedECGData) => void;
 
    language: string;
    setLanguage: (language: string) => void;
@@ -45,17 +42,21 @@ export const useBearStore = create<BearState>()(
             setXwsFile: (xwsFile) => set({ xwsFile }),
 
             imageFile: undefined,
-            setImageFile: (imageFile) => set({ imageFile }),
-
-            samplingRate: undefined,
-            setSamplingRate: (samplingRate) => set({ samplingRate }),
+            setImageFile: (imageFile: File | undefined) => set({ imageFile }),
 
             ecgData: {
                startTime: '',
                endTime: '',
                channels: [],
             },
-            setECGData: (ecgData) => set({ ecgData }),
+            setECGData: (ecgData) =>
+               set({
+                  ecgData: {
+                     cropIndex: ecgData.crop_idx,
+                     maxCropIndex: ecgData.max_crop_idx,
+                     channels: ecgData.channels,
+                  },
+               }),
 
             language: 'english',
             setLanguage: (language) => set({ language }),

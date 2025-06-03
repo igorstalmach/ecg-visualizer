@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
    printWidth: 80,
    tabWidth: 3,
    trailingComma: 'all',
@@ -8,5 +8,3 @@ const config = {
    importOrderSortSpecifiers: true,
    plugins: ['@trivago/prettier-plugin-sort-imports'],
 };
-
-export default config;

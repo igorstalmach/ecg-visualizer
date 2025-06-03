@@ -3,8 +3,14 @@ export type ECGChannel = {
    samples: number[];
 };
 
+export type UnconvertedECGData = {
+   crop_idx: number;
+   max_crop_idx: number;
+   channels: ECGChannel[];
+};
+
 export type ConvertedECGData = {
-   startTime: string;
-   endTime: string;
+   cropIndex?: number;
+   maxCropIndex?: number;
    channels: ECGChannel[];
 };

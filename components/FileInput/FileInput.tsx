@@ -32,6 +32,7 @@ export const FileInput = () => {
    const router = useRouter();
 
    const [isLoading, setIsLoading] = useState(false);
+   const [uploadProgress, setUploadProgress] = useState(0);
 
    const setHeaFile = useBearStore((state) => state.setHeaFile);
    const setDatFile = useBearStore((state) => state.setDatFile);
@@ -84,15 +85,31 @@ export const FileInput = () => {
       formData.append('dat_file', dat_file);
       formData.append('xws_file', xws_file);
 
-      const response = await axios.post(ECG_WFDB_FILES_PARSE_URL, formData);
+      try {
+         const response = await axios.post(
+            `${ECG_WFDB_FILES_PARSE_URL}?crop_idx=0`,
+            formData,
+            {
+               onUploadProgress: (progressEvent) => {
+                  const percent = Math.round(
+                     (progressEvent.loaded * 100) / (progressEvent.total || 1),
+                  );
+                  setUploadProgress(percent);
+               },
+            },
+         );
 
-      setIsLoading(false);
-
-      if (response.status === 200) {
-         setECGData(response.data);
-         router.push('/plot');
-      } else {
+         if (response.status === 200) {
+            setECGData(response.data);
+            router.push('/plot');
+         } else {
+            toast.error(translation.messages.parsingError);
+         }
+      } catch (err) {
          toast.error(translation.messages.parsingError);
+         console.error(err);
+      } finally {
+         setIsLoading(false);
       }
    };
 
@@ -215,7 +232,12 @@ export const FileInput = () => {
             />
             <div className="flex justify-center items-center">
                <Button type="submit" disabled={isLoading}>
-                  {isLoading && <Loader2 className="animate-spin" />}
+                  {isLoading && (
+                     <>
+                        <Loader2 className="animate-spin" />
+                        <span>{uploadProgress}%</span>
+                     </>
+                  )}
                   {translation.fileInput.detectButton}
                </Button>
             </div>
