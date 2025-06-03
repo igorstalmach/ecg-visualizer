@@ -39,6 +39,9 @@ export const englishTranslation = {
       invalidFileExtension: 'Invalid file extension. See supported extensions.',
       invalidSamplingRate: 'Sampling rate must be between 50 and 1000 Hz.',
       validFileIsRequired: 'A valid file is required.',
+      cropperModalTitle: 'Select a Lead',
+      cropperModalDescription:
+         'Use the crop tool to select a single ECG lead from the image. Analysis supports only one lead.',
    },
 
    languageSelector: {
@@ -55,7 +58,8 @@ export const englishTranslation = {
    plot: {
       start: 'Start',
       end: 'End',
-      custom: 'Custom',
+      back: 'Back',
+      of: ' of ',
    },
 
    messages: {

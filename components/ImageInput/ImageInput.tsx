@@ -109,10 +109,11 @@ export const ImageInput = () => {
                <Dialog defaultOpen>
                   <DialogContent>
                      <DialogHeader>
-                        <DialogTitle>Select a Lead</DialogTitle>
+                        <DialogTitle>
+                           {translation.imageInput.cropperModalTitle}
+                        </DialogTitle>
                         <DialogDescription>
-                           Use the crop tool to select a single ECG lead from
-                           the image. Only one lead is supported for parsing.
+                           {translation.imageInput.cropperModalDescription}
                         </DialogDescription>
                      </DialogHeader>
                   </DialogContent>

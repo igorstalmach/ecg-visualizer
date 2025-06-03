@@ -177,7 +177,7 @@ const EcgChart = ({ data }: EcgChartProps) => {
             width: '100vw',
             height: '90vh',
             overflowX: 'auto',
-            overflowY: 'hidden',
+            overflowY: 'auto',
          }}
       />
    );

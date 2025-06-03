@@ -86,14 +86,18 @@ export const FileInput = () => {
       formData.append('xws_file', xws_file);
 
       try {
-         const response = await axios.post(ECG_WFDB_FILES_PARSE_URL, formData, {
-            onUploadProgress: (progressEvent) => {
-               const percent = Math.round(
-                  (progressEvent.loaded * 100) / (progressEvent.total || 1),
-               );
-               setUploadProgress(percent);
+         const response = await axios.post(
+            `${ECG_WFDB_FILES_PARSE_URL}?crop_idx=0`,
+            formData,
+            {
+               onUploadProgress: (progressEvent) => {
+                  const percent = Math.round(
+                     (progressEvent.loaded * 100) / (progressEvent.total || 1),
+                  );
+                  setUploadProgress(percent);
+               },
             },
-         });
+         );
 
          if (response.status === 200) {
             setECGData(response.data);

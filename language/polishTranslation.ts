@@ -43,6 +43,9 @@ export const polishTranslation = {
       invalidSamplingRate:
          'Częstotliwość próbkowania musi mieścić się w przedziale od 50 do 1000 Hz.',
       validFileIsRequired: 'Wymagany jest prawidłowy plik.',
+      cropperModalTitle: 'Wybierz odprowadzenie',
+      cropperModalDescription:
+         'Użyj narzędzia do przycinania, aby wybrać jedno odprowadzenie EKG z obrazu. Analiza obsługuje wyłącznie jedno odprowadzenie.',
    },
 
    languageSelector: {
@@ -59,7 +62,8 @@ export const polishTranslation = {
    plot: {
       start: 'Początek',
       end: 'Koniec',
-      custom: 'Niestandardowy',
+      back: 'Powrót',
+      of: ' z ',
    },
 
    messages: {
