@@ -45,9 +45,10 @@ export const useBearStore = create<BearState>()(
             setImageFile: (imageFile: File | undefined) => set({ imageFile }),
 
             ecgData: {
-               startTime: '',
-               endTime: '',
+               cropIndex: undefined,
+               maxCropIndex: undefined,
                channels: [],
+               events: [],
             },
             setECGData: (ecgData) =>
                set({
@@ -55,6 +56,7 @@ export const useBearStore = create<BearState>()(
                      cropIndex: ecgData.crop_idx,
                      maxCropIndex: ecgData.max_crop_idx,
                      channels: ecgData.channels,
+                     events: ecgData.events,
                   },
                }),
 

@@ -1,129 +1,33 @@
 'use client';
 
-import { ECGChannel } from '@/sharedTypes';
+import { ChartDims, ECGPlotProps, EventRect } from './types';
+import { drawGrid, drawHighlights, drawLeads, drawXAxis } from './utils';
+import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+} from '@/components/ui/tooltip';
 import * as d3 from 'd3';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-interface EcgChartProps {
-   data: ECGChannel[];
-}
+const EcgChart = ({ data, events }: ECGPlotProps) => {
+   const svgContainerRef = useRef<HTMLDivElement | null>(null);
 
-const EcgChart = ({ data }: EcgChartProps) => {
-   const containerRef = useRef<HTMLDivElement | null>(null);
-
-   /**
-    * Draw a checkered grid across (innerWidth x innerHeight).
-    */
-   const drawGrid = (
-      g: d3.Selection<SVGGElement, unknown, null, undefined>,
-      innerWidth: number,
-      innerHeight: number,
-   ) => {
-      const minorSpacing = 10;
-      const majorSpacing = 50;
-
-      for (let x = 0; x <= innerWidth; x += minorSpacing) {
-         const isMajor = x % majorSpacing === 0;
-         g.append('line')
-            .attr('x1', x)
-            .attr('y1', 0)
-            .attr('x2', x)
-            .attr('y2', innerHeight)
-            .attr('stroke', '#b71c1c')
-            .attr('stroke-width', isMajor ? 1 : 0.5)
-            .attr('opacity', isMajor ? 0.4 : 0.2);
-      }
-
-      for (let y = 0; y <= innerHeight; y += minorSpacing) {
-         const isMajor = y % majorSpacing === 0;
-         g.append('line')
-            .attr('x1', 0)
-            .attr('y1', y)
-            .attr('x2', innerWidth)
-            .attr('y2', y)
-            .attr('stroke', '#b71c1c')
-            .attr('stroke-width', isMajor ? 1 : 0.5)
-            .attr('opacity', isMajor ? 0.4 : 0.2);
-      }
-   };
-
-   /**
-    * Draw each lead in a separate horizontal band.
-    */
-   const drawLeads = (
-      g: d3.Selection<SVGGElement, unknown, null, undefined>,
-      data: ECGChannel[],
-      xScale: d3.ScaleLinear<number, number>,
-      bandHeight: number,
-      marginLeft: number,
-   ) => {
-      data.forEach((channel, i) => {
-         const offsetY = i * bandHeight;
-         // local Y-scale for amplitude
-         const yScale = createYScale(channel.samples, bandHeight);
-
-         const lineGen = d3
-            .line<number>()
-            .x((_, idx) => xScale(idx))
-            .y((val) => yScale(val) + offsetY)
-            .curve(d3.curveBasis);
-
-         g.append('path')
-            .datum(channel.samples)
-            .attr('fill', 'none')
-            .attr('stroke', 'black')
-            .attr('stroke-width', 1)
-            .attr('d', lineGen);
-
-         // label
-         g.append('text')
-            .attr('x', -marginLeft + 5)
-            .attr('y', offsetY + bandHeight / 2)
-            .attr('dy', '.35em')
-            .attr('font-size', 14)
-            .attr('fill', 'blue')
-            .text(channel.label);
-      });
-   };
-
-   /**
-    * Draw a bottom X-axis.
-    */
-   const drawXAxis = (
-      g: d3.Selection<SVGGElement, unknown, null, undefined>,
-      xScale: d3.ScaleLinear<number, number>,
-      innerHeight: number,
-   ) => {
-      const xAxis = d3.axisBottom(xScale).ticks(10);
-      g.append('g')
-         .attr('transform', `translate(0,${innerHeight})`)
-         .call(xAxis);
-   };
-
-   /**
-    * Helper to create a Y-scale for each lead,
-    * with amplitude padding so wave isn't clipped.
-    */
-   const createYScale = (samples: number[], bandHeight: number) => {
-      const extent = d3.extent(samples) as [number, number];
-      const pad = 0.2;
-      const [minVal, maxVal] = [extent[0] - pad, extent[1] + pad];
-      return d3.scaleLinear().domain([minVal, maxVal]).range([bandHeight, 0]); // invert
-   };
+   const [eventRects, setEventRects] = useState<EventRect[]>([]);
+   const [dims, setDims] = useState<ChartDims | null>(null);
 
    useEffect(() => {
-      if (!data || data.length === 0) {
+      if (!data.length) {
          return;
       }
-
-      const container = containerRef.current;
-
+      const container = svgContainerRef.current;
       if (!container) {
          return;
       }
 
-      // Clear old content
-      d3.select(container).selectAll('*').remove();
+      // Remove any previous SVG (keep React overlay nodes)
+      d3.select(container).selectAll('svg').remove();
 
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
@@ -131,49 +35,49 @@ const EcgChart = ({ data }: EcgChartProps) => {
       const svgWidth = containerWidth;
       const svgHeight = containerHeight;
 
-      // Assume 4 leads => each is svgHeight / 4
-      // (if data.length != 4, then do totalHeight / data.length)
-      const leadCount = data.length;
-      const bandHeight = svgHeight / leadCount;
+      const bandHeight = svgHeight / data.length;
 
-      // Create the SVG inline here
       const svg = d3
          .select(container)
          .append('svg')
          .attr('width', svgWidth)
          .attr('height', svgHeight);
 
-      // Margins around the plot area
-      const margin = {
-         top: 20,
-         right: 20,
-         bottom: 30,
-         left: 60,
-      };
+      const margin = { top: 20, right: 20, bottom: 30, left: 60 } as const;
       const innerWidth = svgWidth - margin.left - margin.right;
       const innerHeight = svgHeight - margin.top - margin.bottom;
 
-      // Main chart group
       const g = svg
          .append('g')
          .attr('transform', `translate(${margin.left},${margin.top})`);
 
-      // X-scale domain from [0..max samples]
       const maxSamples = d3.max(data, (d) => d.samples.length) ?? 0;
       const xScale = d3
          .scaleLinear()
          .domain([0, maxSamples])
          .range([0, innerWidth]);
 
+      // Draw layers
       drawGrid(g, innerWidth, innerHeight);
+      drawHighlights(g, events, xScale, innerHeight);
       drawLeads(g, data, xScale, bandHeight, margin.left);
       drawXAxis(g, xScale, innerHeight);
-   }, [data]);
+
+      // Build overlay rectangles for tooltips
+      const rects: EventRect[] = events.map((evt) => {
+         const x1 = xScale(Math.min(evt.start, evt.end));
+         const x2 = xScale(Math.max(evt.start, evt.end));
+         return { x: x1, width: x2 - x1, type: evt.type };
+      });
+
+      setEventRects(rects);
+      setDims({ margin, innerWidth, innerHeight });
+   }, [data, events]);
 
    return (
       <div
-         ref={containerRef}
          style={{
+            position: 'relative',
             width: '100vw',
             minWidth: '2000px',
             height: '90vh',
@@ -181,7 +85,45 @@ const EcgChart = ({ data }: EcgChartProps) => {
             overflowX: 'auto',
             overflowY: 'auto',
          }}
-      />
+      >
+         {/* D3‑owned SVG container */}
+         <div
+            ref={svgContainerRef}
+            style={{ width: '100%', height: '100%', position: 'relative' }}
+         />
+
+         {/* React overlay with tooltips */}
+         {dims && (
+            <TooltipProvider delayDuration={150}>
+               {eventRects.map((r, idx) => (
+                  <Tooltip key={idx}>
+                     <TooltipTrigger asChild>
+                        <div
+                           style={{
+                              position: 'absolute',
+                              left: dims.margin.left + r.x,
+                              top: dims.margin.top,
+                              width: r.width,
+                              height: dims.innerHeight,
+                              cursor: 'help',
+                              background: 'rgba(0,0,0,0)',
+                           }}
+                        />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        {r.type ? (
+                           <span className="capitalize font-medium text-sm">
+                              {r.type}
+                           </span>
+                        ) : (
+                           'Event'
+                        )}
+                     </TooltipContent>
+                  </Tooltip>
+               ))}
+            </TooltipProvider>
+         )}
+      </div>
    );
 };
 
