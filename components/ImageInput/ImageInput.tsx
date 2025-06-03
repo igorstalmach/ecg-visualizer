@@ -43,6 +43,7 @@ export const ImageInput = () => {
 
    const [isLoading, setIsLoading] = useState(false);
    const [isCropperVisible, setIsCropperVisible] = useState(false);
+   const [uploadProgress, setUploadProgress] = useState(0);
 
    const setImageFile = useBearStore((state) => state.setImageFile);
    const setECGData = useBearStore((state) => state.setECGData);
@@ -78,7 +79,15 @@ export const ImageInput = () => {
       formData.append('image_file', image);
 
       try {
-         const response = await axios.post(ECG_IMAGE_PARSE_URL, formData);
+         const response = await axios.post(ECG_IMAGE_PARSE_URL, formData, {
+            onUploadProgress: (progressEvent) => {
+               const percent = Math.round(
+                  (progressEvent.loaded * 100) / (progressEvent.total || 1),
+               );
+               setUploadProgress(percent);
+            },
+         });
+
          if (response.status === 200) {
             setECGData(response.data);
             router.push('/plot');
@@ -182,7 +191,12 @@ export const ImageInput = () => {
                   type="submit"
                   disabled={isLoading || !form.watch('image')}
                >
-                  {isLoading && <Loader2 className="animate-spin mr-2" />}
+                  {isLoading && (
+                     <>
+                        <Loader2 className="animate-spin" />
+                        <span>{uploadProgress}%</span>
+                     </>
+                  )}
                   {translation.imageInput.detectButton}
                </Button>
             </div>
