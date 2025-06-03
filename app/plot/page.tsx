@@ -128,7 +128,7 @@ const EcgPage: React.FC = () => {
             </div>
          )}
 
-         <EcgChart data={ecgData.channels} />
+         <EcgChart data={ecgData.channels} events={ecgData.events} />
       </div>
    );
 };
