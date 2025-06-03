@@ -76,7 +76,7 @@ const EcgPage: React.FC = () => {
             <Button
                disabled={isLoading}
                onClick={() => router.push('/')}
-               className="ml-15"
+               className="ml-15 z-10"
             >
                {translation.plot.back}
             </Button>
