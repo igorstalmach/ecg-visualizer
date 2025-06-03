@@ -96,18 +96,14 @@ const EcgPage: React.FC = () => {
                   </Button>
 
                   <p>
-                     {ecgData.cropIndex === -1
-                        ? currentIndex
-                        : ecgData.cropIndex}
+                     {ecgData.cropIndex}
                      {translation.plot.of}
                      {ecgData.maxCropIndex}
                   </p>
 
                   <Button
                      disabled={
-                        currentIndex === -1 ||
-                        currentIndex === ecgData.maxCropIndex ||
-                        isLoading
+                        currentIndex === ecgData.maxCropIndex || isLoading
                      }
                      onClick={() => moveGraph(currentIndex + 1)}
                   >
@@ -115,11 +111,9 @@ const EcgPage: React.FC = () => {
                   </Button>
                   <Button
                      disabled={
-                        currentIndex === -1 ||
-                        currentIndex === ecgData.maxCropIndex ||
-                        isLoading
+                        currentIndex === ecgData.maxCropIndex || isLoading
                      }
-                     onClick={() => moveGraph(-1)}
+                     onClick={() => moveGraph(ecgData.maxCropIndex!)}
                   >
                      {translation.plot.end} <ArrowBigRightDash />
                   </Button>
