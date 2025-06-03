@@ -72,12 +72,16 @@ const EcgPage: React.FC = () => {
 
    return (
       <div>
-         <div className="flex justify-center items-center gap-5 mb-3 mt-7">
-            <Button disabled={isLoading} onClick={() => router.push('/')}>
+         <div className="flex items-center gap-5 mb-3 mt-7">
+            <Button
+               disabled={isLoading}
+               onClick={() => router.push('/')}
+               className="ml-15"
+            >
                {translation.plot.back}
             </Button>
             {inputType === 'wfdb' && (
-               <>
+               <div className="flex grow justify-center items-center gap-5 ml-[-10rem]">
                   <Button
                      disabled={currentIndex === 0 || isLoading}
                      onClick={() => moveGraph(0)}
@@ -86,20 +90,22 @@ const EcgPage: React.FC = () => {
                   </Button>
                   <Button
                      disabled={currentIndex === 0 || isLoading}
-                     onClick={() => moveGraph(currentIndex + 1)}
+                     onClick={() => moveGraph(currentIndex - 1)}
                   >
                      <ArrowBigLeft />
                   </Button>
 
                   <p>
-                     {ecgData.cropIndex}
+                     {ecgData.cropIndex === -1
+                        ? currentIndex
+                        : ecgData.cropIndex}
                      {translation.plot.of}
                      {ecgData.maxCropIndex}
                   </p>
 
                   <Button
                      disabled={currentIndex === -1 || isLoading}
-                     onClick={() => moveGraph(currentIndex - 1)}
+                     onClick={() => moveGraph(currentIndex + 1)}
                   >
                      <ArrowBigRight />
                   </Button>
@@ -109,7 +115,7 @@ const EcgPage: React.FC = () => {
                   >
                      {translation.plot.end} <ArrowBigRightDash />
                   </Button>
-               </>
+               </div>
             )}
          </div>
 
