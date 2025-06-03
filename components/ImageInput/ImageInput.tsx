@@ -4,6 +4,13 @@ import { ECG_IMAGE_PARSE_URL } from '@/api';
 import { ManualCropper } from '@/components/ManualCropper';
 import { Button } from '@/components/ui/button';
 import {
+   Dialog,
+   DialogContent,
+   DialogDescription,
+   DialogHeader,
+   DialogTitle,
+} from '@/components/ui/dialog';
+import {
    Form,
    FormControl,
    FormField,
@@ -89,8 +96,19 @@ export const ImageInput = () => {
    return (
       <Form {...form}>
          {isCropperVisible && form.watch('image') && (
-            <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
-               <div className="relative w-full h-full">
+            <>
+               <Dialog defaultOpen>
+                  <DialogContent>
+                     <DialogHeader>
+                        <DialogTitle>Select a Lead</DialogTitle>
+                        <DialogDescription>
+                           Use the crop tool to select a single ECG lead from
+                           the image. Only one lead is supported for parsing.
+                        </DialogDescription>
+                     </DialogHeader>
+                  </DialogContent>
+               </Dialog>
+               <div className="absolute w-full h-full">
                   <ManualCropper
                      imageFile={form.watch('image')}
                      onCropDoneAction={(file) => {
@@ -99,9 +117,9 @@ export const ImageInput = () => {
                         setIsCropperVisible(false);
                      }}
                   />
-                  <div className="absolute top-6 right-6">
+                  <div className="absolute top-6 right-6 z-11">
                      <Button
-                        variant="secondary"
+                        variant="destructive"
                         onClick={() => {
                            setIsCropperVisible(false);
                            form.resetField('image');
@@ -112,7 +130,7 @@ export const ImageInput = () => {
                      </Button>
                   </div>
                </div>
-            </div>
+            </>
          )}
 
          <form
