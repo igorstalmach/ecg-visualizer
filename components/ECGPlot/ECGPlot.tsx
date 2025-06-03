@@ -128,7 +128,7 @@ const EcgChart = ({ data }: EcgChartProps) => {
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
 
-      const svgWidth = containerWidth * 2;
+      const svgWidth = containerWidth;
       const svgHeight = containerHeight;
 
       // Assume 4 leads => each is svgHeight / 4
@@ -175,7 +175,9 @@ const EcgChart = ({ data }: EcgChartProps) => {
          ref={containerRef}
          style={{
             width: '100vw',
+            minWidth: '1000px',
             height: '90vh',
+            minHeight: '800px',
             overflowX: 'auto',
             overflowY: 'auto',
          }}
