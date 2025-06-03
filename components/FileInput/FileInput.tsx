@@ -231,7 +231,15 @@ export const FileInput = () => {
                )}
             />
             <div className="flex justify-center items-center">
-               <Button type="submit" disabled={isLoading}>
+               <Button
+                  type="submit"
+                  disabled={
+                     isLoading ||
+                     !form.watch('hea_file') ||
+                     !form.watch('dat_file') ||
+                     !form.watch('xws_file')
+                  }
+               >
                   {isLoading && (
                      <>
                         <Loader2 className="animate-spin" />

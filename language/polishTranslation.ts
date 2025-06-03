@@ -21,7 +21,7 @@ export const polishTranslation = {
       annotationsFileHeader: 'Załącz plik adnotacji nagrania EKG',
       annotationsFileDescription:
          'Pole akceptuje plik adnotacji .xws zgodny z formatem WFDB.',
-      detectButton: 'Wykryj',
+      detectButton: 'Analizuj',
       seeSupportedFiles: 'Zobacz obsługiwane pliki',
       invalidFileExtension:
          'Nieprawidłowe rozszerzenie pliku. Zobacz obsługiwane rozszerzenia.',
@@ -35,7 +35,7 @@ export const polishTranslation = {
       samplingRateHeader: 'Ustaw częstotliwość próbkowania nagrania',
       samplingRateDescription:
          'Częstotliwość próbkowania musi mieścić się w przedziale od 50 do 1000 Hz.',
-      detectButton: 'Wykryj',
+      detectButton: 'Analizuj',
       seeSupportedFiles: 'Zobacz obsługiwane pliki',
       seeSupportedValues: 'Zobacz obsługiwane wartości',
       invalidFileExtension:
