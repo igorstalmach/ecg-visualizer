@@ -65,4 +65,9 @@ export const englishTranslation = {
    messages: {
       parsingError: 'Error parsing the files. Please try again later.',
    },
+
+   manualCropper: {
+      cancel: 'Cancel',
+      crop: 'Crop and submit',
+   },
 };

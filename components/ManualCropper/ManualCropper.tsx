@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/hooks/useTranslation';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Point {
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export const ManualCropper = ({ imageFile, onCropDoneAction }: Props) => {
+   const translation = useTranslation();
+
    const imgRef = useRef<HTMLImageElement | null>(null);
    const overlayRef = useRef<HTMLDivElement | null>(null);
 
@@ -141,7 +144,7 @@ export const ManualCropper = ({ imageFile, onCropDoneAction }: Props) => {
 
          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-4">
             <Button variant="secondary" onClick={cropImage}>
-               Crop & Submit
+               {translation.manualCropper.crop}
             </Button>
          </div>
       </div>

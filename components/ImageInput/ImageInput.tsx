@@ -118,7 +118,7 @@ export const ImageInput = () => {
                      </DialogHeader>
                   </DialogContent>
                </Dialog>
-               <div className="absolute w-full h-full">
+               <div className="absolute w-full h-full z-5">
                   <ManualCropper
                      imageFile={form.watch('image')}
                      onCropDoneAction={(file) => {
@@ -136,7 +136,7 @@ export const ImageInput = () => {
                            fileInputRef.current!.value = '';
                         }}
                      >
-                        Cancel
+                        {translation.manualCropper.cancel}
                      </Button>
                   </div>
                </div>

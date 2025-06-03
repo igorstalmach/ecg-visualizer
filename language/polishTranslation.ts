@@ -69,4 +69,9 @@ export const polishTranslation = {
    messages: {
       parsingError: 'Błąd podczas analizy plików. Spróbuj ponownie później.',
    },
+
+   manualCropper: {
+      cancel: 'Anuluj',
+      crop: 'Przytnij i zapisz',
+   },
 };
