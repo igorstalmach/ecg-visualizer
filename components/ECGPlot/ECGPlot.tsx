@@ -175,9 +175,9 @@ const EcgChart = ({ data }: EcgChartProps) => {
          ref={containerRef}
          style={{
             width: '100vw',
-            minWidth: '1000px',
+            minWidth: '2000px',
             height: '90vh',
-            minHeight: '800px',
+            minHeight: '1000px',
             overflowX: 'auto',
             overflowY: 'auto',
          }}
