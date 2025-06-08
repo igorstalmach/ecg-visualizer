@@ -5,6 +5,7 @@ export type ECGPlotProps = {
    data: ECGChannel[];
    events: ECGEvent[];
    svgContainerRef: RefObject<HTMLDivElement | null>;
+   graphScale: number;
 };
 
 export type EventRect = {

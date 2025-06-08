@@ -3,23 +3,28 @@
 import EcgChart from '@/components/ECGPlot/ECGPlot';
 import { Timeline } from '@/components/Timeline';
 import { useBearStore } from '@/hooks/useStore';
-import React, { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-const EcgPage: React.FC = () => {
+export default function ECGPage() {
+   const [graphScale, setGraphScale] = useState(1);
+
    const svgContainerRef = useRef<HTMLDivElement | null>(null);
 
    const { ecgData } = useBearStore((state) => state);
 
    return (
       <>
-         <Timeline svgContainerRef={svgContainerRef} />
+         <Timeline
+            graphScale={graphScale}
+            setGraphScale={setGraphScale}
+            svgContainerRef={svgContainerRef}
+         />
          <EcgChart
+            graphScale={graphScale}
             svgContainerRef={svgContainerRef}
             data={ecgData.channels}
             events={ecgData.events}
          />
       </>
    );
-};
-
-export default EcgPage;
+}

@@ -11,7 +11,12 @@ import {
 import * as d3 from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 
-const EcgChart = ({ data, events, svgContainerRef }: ECGPlotProps) => {
+const EcgChart = ({
+   data,
+   events,
+   svgContainerRef,
+   graphScale,
+}: ECGPlotProps) => {
    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
    const [eventRects, setEventRects] = useState<EventRect[]>([]);
@@ -77,7 +82,7 @@ const EcgChart = ({ data, events, svgContainerRef }: ECGPlotProps) => {
       if (scrollContainer) {
          scrollContainer.scrollLeft = 0;
       }
-   }, [data, events]);
+   }, [data, events, graphScale]);
 
    return (
       <div
@@ -86,7 +91,8 @@ const EcgChart = ({ data, events, svgContainerRef }: ECGPlotProps) => {
       >
          <div
             ref={svgContainerRef}
-            className="relative w-full min-w-[2000px] h-full min-h-[1000px]"
+            className="relative w-full h-full min-h-[1000px]"
+            style={{ minWidth: graphScale * 1000 }}
          />
 
          {dims && (

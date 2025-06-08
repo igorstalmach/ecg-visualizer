@@ -12,12 +12,18 @@ import {
    ArrowBigRightDash,
    Loader2,
    Printer,
+   ZoomIn,
+   ZoomOut,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-export const Timeline = ({ svgContainerRef }: TimelineProps) => {
+export const Timeline = ({
+   svgContainerRef,
+   graphScale,
+   setGraphScale,
+}: TimelineProps) => {
    const translation = useTranslation();
    const router = useRouter();
 
@@ -150,12 +156,12 @@ export const Timeline = ({ svgContainerRef }: TimelineProps) => {
             <Button
                disabled={isLoading}
                onClick={() => router.push('/')}
-               className="ml-15"
+               className="ml-15 z-11"
             >
                {translation.plot.back}
             </Button>
             {inputType === 'wfdb' && (
-               <div className="flex grow justify-center items-center gap-5 ml-[-10rem]">
+               <div className="flex grow justify-center items-center gap-5">
                   <Button
                      disabled={currentIndex === 0 || isLoading}
                      onClick={() => moveGraph(0)}
@@ -193,13 +199,23 @@ export const Timeline = ({ svgContainerRef }: TimelineProps) => {
                   </Button>
                </div>
             )}
-            <Button
-               disabled={isLoading}
-               onClick={handlePrint}
-               className="mr-15"
-            >
-               <Printer />
-            </Button>
+            <div className="flex justify-center items-center gap-2 mr-15">
+               <Button
+                  disabled={graphScale === 5 || isLoading}
+                  onClick={() => setGraphScale(graphScale + 1)}
+               >
+                  <ZoomIn />
+               </Button>
+               <Button
+                  disabled={graphScale === 1 || isLoading}
+                  onClick={() => setGraphScale(graphScale - 1)}
+               >
+                  <ZoomOut />
+               </Button>
+               <Button disabled={isLoading} onClick={handlePrint}>
+                  <Printer />
+               </Button>
+            </div>
          </div>
 
          {isLoading && (

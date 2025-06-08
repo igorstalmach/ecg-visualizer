@@ -21,7 +21,7 @@ export const englishTranslation = {
       annotationsFileHeader: 'Attach ECG Recording Annotations File',
       annotationsFileDescription:
          'Field accepts a .xws annotations file specified by WFDB format.',
-      detectButton: 'Detect',
+      detectButton: 'Analyze',
       seeSupportedFiles: 'See supported files',
       invalidFileExtension: 'Invalid file extension. See supported extensions.',
       validFileIsRequired: 'A valid file is required.',
@@ -36,7 +36,7 @@ export const englishTranslation = {
          'Field accepts image files in .png or .jpg formats.',
       samplingRateHeader: 'Set Recording Sampling Rate',
       samplingRateDescription: 'Sampling rate must be between 50 and 1000 Hz.',
-      detectButton: 'Detect',
+      detectButton: 'Analyze',
       seeSupportedFiles: 'See supported files',
       seeSupportedValues: 'See supported values',
       invalidFileExtension: 'Invalid file extension. See supported extensions.',
