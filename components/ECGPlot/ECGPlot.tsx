@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const EcgChart = ({ data, events }: ECGPlotProps) => {
    const svgContainerRef = useRef<HTMLDivElement | null>(null);
+   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
    const [eventRects, setEventRects] = useState<EventRect[]>([]);
    const [dims, setDims] = useState<ChartDims | null>(null);
@@ -72,27 +73,35 @@ const EcgChart = ({ data, events }: ECGPlotProps) => {
 
       setEventRects(rects);
       setDims({ margin, innerWidth, innerHeight });
+
+      const scrollContainer = scrollContainerRef.current;
+      if (scrollContainer) {
+         scrollContainer.scrollLeft = 0;
+      }
    }, [data, events]);
 
    return (
       <div
+         ref={scrollContainerRef}
          style={{
             position: 'relative',
             width: '100vw',
-            minWidth: '2000px',
             height: '90vh',
-            minHeight: '1000px',
-            overflowX: 'auto',
-            overflowY: 'auto',
+            overflowX: 'scroll',
+            overflowY: 'scroll',
          }}
       >
-         {/* D3‑owned SVG container */}
          <div
             ref={svgContainerRef}
-            style={{ width: '100%', height: '100%', position: 'relative' }}
+            style={{
+               width: '100%',
+               minWidth: '2000px',
+               height: '100%',
+               minHeight: '1000px',
+               position: 'relative',
+            }}
          />
 
-         {/* React overlay with tooltips */}
          {dims && (
             <TooltipProvider delayDuration={150}>
                {eventRects.map((r, idx) => (

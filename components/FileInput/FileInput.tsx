@@ -108,8 +108,6 @@ export const FileInput = () => {
       } catch (err) {
          toast.error(translation.messages.parsingError);
          console.error(err);
-      } finally {
-         setIsLoading(false);
       }
    };
 
