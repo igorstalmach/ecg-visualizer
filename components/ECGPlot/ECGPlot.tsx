@@ -11,8 +11,7 @@ import {
 import * as d3 from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 
-const EcgChart = ({ data, events }: ECGPlotProps) => {
-   const svgContainerRef = useRef<HTMLDivElement | null>(null);
+const EcgChart = ({ data, events, svgContainerRef }: ECGPlotProps) => {
    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
    const [eventRects, setEventRects] = useState<EventRect[]>([]);
@@ -44,7 +43,7 @@ const EcgChart = ({ data, events }: ECGPlotProps) => {
          .attr('width', svgWidth)
          .attr('height', svgHeight);
 
-      const margin = { top: 20, right: 20, bottom: 30, left: 60 } as const;
+      const margin = { top: 20, right: 0, bottom: 30, left: 60 } as const;
       const innerWidth = svgWidth - margin.left - margin.right;
       const innerHeight = svgHeight - margin.top - margin.bottom;
 
@@ -83,23 +82,11 @@ const EcgChart = ({ data, events }: ECGPlotProps) => {
    return (
       <div
          ref={scrollContainerRef}
-         style={{
-            position: 'relative',
-            width: '100vw',
-            height: '90vh',
-            overflowX: 'scroll',
-            overflowY: 'scroll',
-         }}
+         className="relative w-[calc(100vw-60px)] h-[90vh] overflow-x-scroll overflow-y-scroll"
       >
          <div
             ref={svgContainerRef}
-            style={{
-               width: '100%',
-               minWidth: '2000px',
-               height: '100%',
-               minHeight: '1000px',
-               position: 'relative',
-            }}
+            className="relative w-full min-w-[2000px] h-full min-h-[1000px]"
          />
 
          {dims && (

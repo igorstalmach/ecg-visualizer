@@ -16,11 +16,13 @@ import {
    HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { useBearStore } from '@/hooks/useStore';
 import { useTranslation } from '@/hooks/useTranslation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { FileQuestion, Loader2 } from 'lucide-react';
+import { CircleHelp, FileQuestion, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -228,7 +230,25 @@ export const FileInput = () => {
                   </FormItem>
                )}
             />
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col gap-6 justify-center items-center">
+               <div className="flex items-center space-x-2">
+                  <Switch id="preview-recording" />
+                  <Label htmlFor="preview-recording">
+                     {translation.fileInput.previewRecording}
+                     <HoverCard openDelay={0} closeDelay={150}>
+                        <HoverCardTrigger>
+                           <CircleHelp
+                              size={16}
+                              strokeWidth={1.75}
+                              className="cursor-help"
+                           />
+                        </HoverCardTrigger>
+                        <HoverCardContent>
+                           {translation.fileInput.previewRecordingDescription}
+                        </HoverCardContent>
+                     </HoverCard>
+                  </Label>
+               </div>
                <Button
                   type="submit"
                   disabled={

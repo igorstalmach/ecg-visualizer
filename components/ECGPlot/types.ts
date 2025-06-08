@@ -1,18 +1,18 @@
 import { ECGChannel, ECGEvent } from '@/sharedTypes';
+import { RefObject } from 'react';
 
 export type ECGPlotProps = {
    data: ECGChannel[];
    events: ECGEvent[];
+   svgContainerRef: RefObject<HTMLDivElement | null>;
 };
 
-/** Absolute‑pixel rectangle for a single event (used for tooltip triggers). */
 export type EventRect = {
    x: number;
    width: number;
    type?: string;
 };
 
-/** Chart layout info we need outside the D3 scope. */
 export type ChartDims = {
    margin: { top: number; right: number; bottom: number; left: number };
    innerWidth: number;

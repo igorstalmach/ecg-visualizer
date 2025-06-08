@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-   title: 'AI ECG Arrhythmia Detector',
+   title: 'ECG Arrhythmia Detector',
    description: 'AI-powered ECG Arrhythmia Detector',
 };
 

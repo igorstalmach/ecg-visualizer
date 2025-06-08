@@ -1,7 +1,9 @@
 import { ECG_WFDB_FILES_PARSE_URL } from '@/api';
+import { TimelineProps } from '@/components/Timeline/types';
 import { Button } from '@/components/ui/button';
 import { useBearStore } from '@/hooks/useStore';
 import { useTranslation } from '@/hooks/useTranslation';
+import { getTimestamp } from '@/utils/getTimestamp';
 import axios from 'axios';
 import {
    ArrowBigLeft,
@@ -9,12 +11,13 @@ import {
    ArrowBigRight,
    ArrowBigRightDash,
    Loader2,
+   Printer,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-export const Timeline = () => {
+export const Timeline = ({ svgContainerRef }: TimelineProps) => {
    const translation = useTranslation();
    const router = useRouter();
 
@@ -67,13 +70,87 @@ export const Timeline = () => {
       void fetchGraphData(newIndex);
    };
 
+   const handlePrint = () => {
+      const svgElement = svgContainerRef.current?.querySelector('svg');
+      if (!svgElement) {
+         return;
+      }
+
+      const clonedSvg = svgElement.cloneNode(true) as SVGSVGElement;
+
+      clonedSvg.removeAttribute('style');
+      clonedSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+      if (!clonedSvg.hasAttribute('viewBox')) {
+         const width =
+            clonedSvg.getAttribute('width') || svgElement.clientWidth;
+         const height =
+            clonedSvg.getAttribute('height') || svgElement.clientHeight;
+         clonedSvg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      }
+
+      clonedSvg.setAttribute('width', '100%');
+      clonedSvg.setAttribute('height', 'auto');
+
+      const svgData = new XMLSerializer().serializeToString(clonedSvg);
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+         return;
+      }
+
+      const html = `
+      <!DOCTYPE html>
+      <html>
+         <head>
+            <title>${translation.plot.printWindow + getTimestamp()}</title>
+            <style>
+               @page {
+                  size: A4 landscape;
+                  margin: 0;
+               }
+               html, body {
+                  margin: 0;
+                  padding: 0;
+                  height: 100%;
+                  width: 100%;
+               }
+               body {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+               }
+               svg {
+                  display: block;
+                  width: 100%;
+                  height: auto;
+                  max-height: 100%;
+               }
+            </style>
+         </head>
+         <body>
+            ${svgData}
+            <script>
+               setTimeout(() => {
+                  window.print();
+                  window.close();
+               }, 200);
+            </script>
+         </body>
+      </html>
+   `;
+
+      printWindow.document.open();
+      printWindow.document.write(html);
+      printWindow.document.close();
+   };
+
    return (
       <>
-         <div className="flex items-center gap-5 mb-3 mt-7">
+         <div className="flex items-center gap-5 mb-3 mt-7 z-10">
             <Button
                disabled={isLoading}
                onClick={() => router.push('/')}
-               className="ml-15 z-10"
+               className="ml-15"
             >
                {translation.plot.back}
             </Button>
@@ -116,6 +193,13 @@ export const Timeline = () => {
                   </Button>
                </div>
             )}
+            <Button
+               disabled={isLoading}
+               onClick={handlePrint}
+               className="mr-15"
+            >
+               <Printer />
+            </Button>
          </div>
 
          {isLoading && (

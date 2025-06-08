@@ -1,6 +1,6 @@
 export const polishTranslation = {
    home: {
-      homeTitle: 'AI Detektor Arytmii w EKG',
+      homeTitle: 'Detektor Arytmii w EKG',
    },
 
    inputSelector: {
@@ -26,6 +26,9 @@ export const polishTranslation = {
       invalidFileExtension:
          'Nieprawidłowe rozszerzenie pliku. Zobacz obsługiwane rozszerzenia.',
       validFileIsRequired: 'Wymagany jest prawidłowy plik.',
+      previewRecording: 'Podgląd pełnego nagrania EKG',
+      previewRecordingDescription:
+         'Wyświetl pełny zapis EKG, zamiast wyłącznie fragmenty zawierające wykryte arytmie.',
    },
 
    imageInput: {
@@ -46,6 +49,9 @@ export const polishTranslation = {
       cropperModalTitle: 'Wybierz odprowadzenie',
       cropperModalDescription:
          'Użyj narzędzia do przycinania, aby wybrać jedno odprowadzenie EKG z obrazu. Analiza obsługuje wyłącznie jedno odprowadzenie.',
+      previewRecording: 'Podgląd pełnego nagrania EKG',
+      previewRecordingDescription:
+         'Wyświetl pełny zapis EKG zamiast wyłącznie fragmenty zawierające wykryte arytmie.',
    },
 
    languageSelector: {
@@ -64,6 +70,7 @@ export const polishTranslation = {
       end: 'Koniec',
       back: 'Powrót',
       of: ' z ',
+      printWindow: 'analiza-ekg',
    },
 
    messages: {

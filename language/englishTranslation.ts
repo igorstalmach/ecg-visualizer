@@ -1,6 +1,6 @@
 export const englishTranslation = {
    home: {
-      homeTitle: 'AI ECG Arrhythmia Detector',
+      homeTitle: 'ECG Arrhythmia Detector',
    },
 
    inputSelector: {
@@ -25,6 +25,9 @@ export const englishTranslation = {
       seeSupportedFiles: 'See supported files',
       invalidFileExtension: 'Invalid file extension. See supported extensions.',
       validFileIsRequired: 'A valid file is required.',
+      previewRecording: 'Preview full ECG recording',
+      previewRecordingDescription:
+         'View the entire ECG recording, instead of just the segments with detected arrhythmias.',
    },
 
    imageInput: {
@@ -42,6 +45,9 @@ export const englishTranslation = {
       cropperModalTitle: 'Select a Lead',
       cropperModalDescription:
          'Use the crop tool to select a single ECG lead from the image. Analysis supports only one lead.',
+      previewRecording: 'Preview full ECG recording',
+      previewRecordingDescription:
+         'View the entire ECG recording, instead of just the segments with detected arrhythmias.',
    },
 
    languageSelector: {
@@ -60,6 +66,7 @@ export const englishTranslation = {
       end: 'End',
       back: 'Back',
       of: ' of ',
+      printWindow: 'ecg-analysis',
    },
 
    messages: {
