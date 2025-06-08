@@ -12,8 +12,8 @@ import {
    ArrowBigRightDash,
    Loader2,
    Printer,
-   ZoomIn,
-   ZoomOut,
+   // ZoomIn,
+   // ZoomOut,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -21,8 +21,8 @@ import { toast } from 'sonner';
 
 export const Timeline = ({
    svgContainerRef,
-   graphScale,
-   setGraphScale,
+   // graphScale,
+   // setGraphScale,
 }: TimelineProps) => {
    const translation = useTranslation();
    const router = useRouter();
@@ -200,18 +200,18 @@ export const Timeline = ({
                </div>
             )}
             <div className="flex justify-center items-center gap-2 mr-15">
-               <Button
-                  disabled={graphScale === 5 || isLoading}
-                  onClick={() => setGraphScale(graphScale + 1)}
-               >
-                  <ZoomIn />
-               </Button>
-               <Button
-                  disabled={graphScale === 1 || isLoading}
-                  onClick={() => setGraphScale(graphScale - 1)}
-               >
-                  <ZoomOut />
-               </Button>
+               {/*<Button*/}
+               {/*   disabled={graphScale === 5 || isLoading}*/}
+               {/*   onClick={() => setGraphScale(graphScale + 1)}*/}
+               {/*>*/}
+               {/*   <ZoomIn />*/}
+               {/*</Button>*/}
+               {/*<Button*/}
+               {/*   disabled={graphScale === 1 || isLoading}*/}
+               {/*   onClick={() => setGraphScale(graphScale - 1)}*/}
+               {/*>*/}
+               {/*   <ZoomOut />*/}
+               {/*</Button>*/}
                <Button disabled={isLoading} onClick={handlePrint}>
                   <Printer />
                </Button>

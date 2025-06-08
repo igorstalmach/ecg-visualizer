@@ -92,7 +92,7 @@ const EcgChart = ({
          <div
             ref={svgContainerRef}
             className="relative w-full h-full min-h-[1000px]"
-            style={{ minWidth: graphScale * 1000 }}
+            style={{ width: graphScale * 2000 }}
          />
 
          {dims && (
