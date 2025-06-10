@@ -71,6 +71,7 @@ export const englishTranslation = {
 
    messages: {
       parsingError: 'Error parsing the files. Please try again later.',
+      noDataFound: 'No arrhythmias detected in the recording',
    },
 
    manualCropper: {

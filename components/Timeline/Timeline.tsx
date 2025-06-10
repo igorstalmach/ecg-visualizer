@@ -31,9 +31,8 @@ export const Timeline = ({
    const [uploadProgress, setUploadProgress] = useState(0);
    const [currentIndex, setCurrentIndex] = useState(0);
 
-   const { ecgData, heaFile, datFile, xwsFile, inputType } = useBearStore(
-      (state) => state,
-   );
+   const { ecgData, heaFile, datFile, xwsFile, inputType, showFullSignal } =
+      useBearStore((state) => state);
    const setECGData = useBearStore((state) => state.setECGData);
 
    const fetchGraphData = async (cropIndex: number = 0) => {
@@ -46,7 +45,7 @@ export const Timeline = ({
 
       try {
          const response = await axios.post(
-            `${ECG_WFDB_FILES_PARSE_URL}?crop_idx=${cropIndex}`,
+            `${ECG_WFDB_FILES_PARSE_URL}?crop_idx=${cropIndex}&show_full_signal=${showFullSignal}`,
             formData,
             {
                onUploadProgress: (progressEvent) => {
@@ -58,8 +57,11 @@ export const Timeline = ({
             },
          );
 
-         if (response.status === 200) {
+         if (response.status === 200 && response.data.channels) {
             setECGData(response.data);
+         } else if (response.status === 200) {
+            toast.info(translation.messages.noDataFound);
+            setIsLoading(false);
          } else {
             toast.error(translation.messages.parsingError);
          }

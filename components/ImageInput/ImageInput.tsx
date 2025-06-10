@@ -24,13 +24,13 @@ import {
    HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
+// import { Label } from '@/components/ui/label';
+// import { Switch } from '@/components/ui/switch';
 import { useBearStore } from '@/hooks/useStore';
 import { useTranslation } from '@/hooks/useTranslation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { CircleHelp, FileQuestion, Loader2 } from 'lucide-react';
+import { FileQuestion, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -47,8 +47,11 @@ export const ImageInput = () => {
    const [isCropperVisible, setIsCropperVisible] = useState(false);
    const [uploadProgress, setUploadProgress] = useState(0);
 
+   // const showFullGraph = useBearStore((state) => state.showFullSignal);
+
    const setImageFile = useBearStore((state) => state.setImageFile);
    const setECGData = useBearStore((state) => state.setECGData);
+   // const setShowFullGraph = useBearStore((state) => state.setShowFullSignal);
 
    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -188,24 +191,30 @@ export const ImageInput = () => {
                )}
             />
             <div className="flex flex-col gap-6 justify-center items-center">
-               <div className="flex items-center space-x-2">
-                  <Switch id="preview-recording" />
-                  <Label htmlFor="preview-recording">
-                     {translation.imageInput.previewRecording}
-                     <HoverCard openDelay={0} closeDelay={150}>
-                        <HoverCardTrigger>
-                           <CircleHelp
-                              size={16}
-                              strokeWidth={1.75}
-                              className="cursor-help"
-                           />
-                        </HoverCardTrigger>
-                        <HoverCardContent>
-                           {translation.imageInput.previewRecordingDescription}
-                        </HoverCardContent>
-                     </HoverCard>
-                  </Label>
-               </div>
+               {/*<div className="flex items-center space-x-2">*/}
+               {/*   <Switch*/}
+               {/*      id="preview-recording"*/}
+               {/*      checked={showFullGraph}*/}
+               {/*      onClick={() => {*/}
+               {/*         setShowFullGraph(!showFullGraph);*/}
+               {/*      }}*/}
+               {/*   />*/}
+               {/*   <Label htmlFor="preview-recording">*/}
+               {/*      {translation.imageInput.previewRecording}*/}
+               {/*      <HoverCard openDelay={0} closeDelay={150}>*/}
+               {/*         <HoverCardTrigger>*/}
+               {/*            <CircleHelp*/}
+               {/*               size={16}*/}
+               {/*               strokeWidth={1.75}*/}
+               {/*               className="cursor-help"*/}
+               {/*            />*/}
+               {/*         </HoverCardTrigger>*/}
+               {/*         <HoverCardContent>*/}
+               {/*            {translation.imageInput.previewRecordingDescription}*/}
+               {/*         </HoverCardContent>*/}
+               {/*      </HoverCard>*/}
+               {/*   </Label>*/}
+               {/*</div>*/}
                <Button
                   type="submit"
                   disabled={isLoading || !form.watch('image')}

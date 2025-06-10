@@ -75,6 +75,7 @@ export const polishTranslation = {
 
    messages: {
       parsingError: 'Błąd podczas analizy plików. Spróbuj ponownie później.',
+      noDataFound: 'Brak wykrytych arytmii w nagraniu',
    },
 
    manualCropper: {

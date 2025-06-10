@@ -23,6 +23,9 @@ interface BearState {
 
    language: string;
    setLanguage: (language: string) => void;
+
+   showFullSignal: boolean;
+   setShowFullSignal: (showFullGraph: boolean) => void;
 }
 
 export const useBearStore = create<BearState>()(
@@ -62,6 +65,10 @@ export const useBearStore = create<BearState>()(
 
             language: 'english',
             setLanguage: (language) => set({ language }),
+
+            showFullSignal: true,
+            setShowFullSignal: (showFullSignal) =>
+               set({ showFullSignal: showFullSignal }),
          }),
          {
             name: 'bear-storage',
